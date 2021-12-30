@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/jquery-1.11.0.min.js"></script>
+    <script src="./js/echarts.min.js"></script>
+    <title>echarts_demo</title>
+</head>
+
+<body>
+    <div id="barChart" style="width: 600px;height: 400px;"></div>
+    <div id="pieChart"></div>
+    <script>
+        const data = [
+            ['湖州市', '嘉兴市', '杭州市', '绍兴市', '宁坡市', '衢州市', '金华市', '台州市', '丽水市', '温州市'],
+            ['68', '20', '70', '50', '30', '80', '28', '48', '90', '40']
+        ];
+
+        var barChartDom = document.getElementById("barChart");
+        var barChart = echarts.init(barChartDom);
+        var barChartOption = init3DBarOption(data)
+        barChart.setOption(barChartOption, true);
+
+        function init3DBarOption(data) {
+            var barWidth = 20;
+            var borderWidth = 2;
+            let barChartOption = {
+                xAxis: {
+                    type: 'category',
+                    data: data[0],
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        interval: 0,
+                        rotate: 50,
+                        color: '#FFF'
+                    },
+                },
+                yAxis: {
+                    type: 'value',
+                    axisTick: {
+                        show: false
+                    },
+                    min: 0,
+                    max: 100,
+                    minInterval: 20,
+                    axisLabel: {
+                        show: true,
+                        interval: 'auto',
+                        formatter: '{value}%',
+                        color: '#FFF'
+                    },
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            type: 'dashed',
+                            color: '#055423'
+                        }
+                    }
+                },
+                series: [
+                    {
+                        z: 2,
+                        name: '数据',
+                        type: "bar",
+                        barWidth: barWidth / 2 + borderWidth,
+                        barGap: "0",
+                        data: data[1],
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: '#0a1853' },
+                                    { offset: 1, color: '#e3d501' }
+                                ]),
+                                borderColor: '#e3d501',
+                                borderWidth: borderWidth,
+                            },
+                        },
+                    },
+                    {
+                        z: 2,
+                        name: '数据',
+                        type: "bar",
+                        barWidth: barWidth / 2,
+                        barGap: "0",
+                        data: data[1],
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: '#0a1853' },
+                                    { offset: 1, color: '#e3d501' }
+                                ]),
+                                borderColor: '#e3d501',
+                            },
+                        },
+                    },
+                    {
+                        z: 1,
+                        name: '数据',
+                        type: "pictorialBar",
+                        data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                        symbol: "diamond",
+                        symbolOffset: ["0%", "50%"],
+                        symbolSize: [barWidth + 2 * (borderWidth), 12],
+                        itemStyle: {
+                            normal: {
+                                color: '#e6d904',
+                                borderColor: '#e3d501',
+                                borderWidth: borderWidth
+                            },
+                        },
+                        tooltip: {
+                            show: false,
+                        },
+                    },
+                    {
+                        z: 3,
+                        name: '数据',
+                        type: "pictorialBar",
+                        symbolPosition: "end",
+                        data: data[1],
+                        symbol: "diamond",
+                        symbolOffset: ["0%", "-50%"],
+                        symbolSize: [barWidth + 2 * (borderWidth), 12],
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: '#baae0a' },
+                                    { offset: 1, color: '#e3d501' }
+                                ]),
+                                borderColor: '#e3d501',
+                                borderWidth: borderWidth
+                            },
+                        },
+                        tooltip: {
+                            show: false,
+                        },
+                    }
+                ]
+            };
+            return barChartOption;
+        }
+    </script>
+</body>
+
+</html>
